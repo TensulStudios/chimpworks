@@ -1,25 +1,24 @@
-const pendingTokens = {}
+let pendingTokens = {}
 
-export async function handler(req) {
-  const { searchParams } = new URL(req.url)
-  const mode = searchParams.get('mode')
-  const token = searchParams.get('token')
-  const room = searchParams.get('room')
+export default function handler(req, res) {
+  const { mode, token, room } = req.query
 
-  if (mode === 'create' && token && room) {
+  if (mode === 'create') {
+    if (!token || !room) return res.status(400).json({ error: 'Missing token or room' })
     pendingTokens[token] = { room, claimed: false }
-    return new Response(JSON.stringify({ success: true }))
+    return res.status(200).json({ success: true })
   }
 
-  if (mode === 'claim' && token) {
-    const data = pendingTokens[token]
-    if (!data) return new Response(JSON.stringify({ error: "Invalid token" }), { status: 404 })
+  if (mode === 'claim') {
+    if (!token) return res.status(400).json({ error: 'Missing token' })
 
-    if (data.claimed) return new Response(JSON.stringify({ error: "Token already used" }), { status: 403 })
+    const data = pendingTokens[token]
+    if (!data) return res.status(404).json({ error: 'Invalid token' })
+    if (data.claimed) return res.status(403).json({ error: 'Token already used' })
 
     data.claimed = true
-    return new Response(JSON.stringify({ room: data.room }))
+    return res.status(200).json({ room: data.room })
   }
 
-  return new Response(JSON.stringify({ error: "Bad request" }), { status: 400 })
+  return res.status(400).json({ error: 'Cannot process your request.' })
 }
