@@ -20,5 +20,5 @@ export default function handler(req, res) {
     return res.status(200).json({ room: data.room })
   }
 
-  return res.status(400).json({ error: 'Cannot process your request.' })
+  return res.status(400).json({ error: 'Unable to process request.' })
 }
