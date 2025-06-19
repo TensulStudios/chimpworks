@@ -1,24 +1,46 @@
 let pendingTokens = {}
 
 export default function handler(req, res) {
+  if (req.method !== 'GET') {
+    res.status(405).json({ error: 'Only GET requests allowed.' })
+    return
+  }
+
   const { mode, token, room } = req.query
 
+  if (!mode) {
+    res.status(400).json({ error: 'Missing "mode" parameter.' })
+    return
+  }
+
   if (mode === 'create') {
-    if (!token || !room) return res.status(400).json({ error: 'Missing token or room' })
+    if (!token || !room) {
+      res.status(400).json({ error: 'Missing "token" or "room" parameter for create.' })
+      return
+    }
     pendingTokens[token] = { room, claimed: false }
-    return res.status(200).json({ success: true })
+    res.status(200).json({ success: true })
+    return
   }
 
   if (mode === 'claim') {
-    if (!token) return res.status(400).json({ error: 'Missing token' })
-
+    if (!token) {
+      res.status(400).json({ error: 'Missing "token" parameter for claim.' })
+      return
+    }
     const data = pendingTokens[token]
-    if (!data) return res.status(404).json({ error: 'Invalid token' })
-    if (data.claimed) return res.status(403).json({ error: 'Token already used' })
-
+    if (!data) {
+      res.status(404).json({ error: 'Invalid token.' })
+      return
+    }
+    if (data.claimed) {
+      res.status(403).json({ error: 'Token already used.' })
+      return
+    }
     data.claimed = true
-    return res.status(200).json({ room: data.room })
+    res.status(200).json({ room: data.room })
+    return
   }
 
-  return res.status(400).json({ error: 'Unable to process request.' })
+  res.status(400).json({ error: 'Cannot process your request.' })
 }
