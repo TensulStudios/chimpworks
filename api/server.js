@@ -15,7 +15,20 @@ export default function handler(req, res) {
     return
   }
 
-  const { appid, voiceid, token, mode } = req.query
+   async function fetchToken() {
+    const responseEl = document.getElementById('response');
+    try {
+      const res = await fetch('https://tapkey.vercel.app/api/onetime');
+      if (!res.ok) throw new Error('Network response was not ok');
+      const data = await res.json();
+      return dta
+    } catch (e) {
+      return ""
+    }
+  }
+  fetchToken();
+  
+  const { appid, voiceid, mode } = req.query
 
   if (!token) {
     res.status(400).json({ error: 'Missing token parameter.' })
