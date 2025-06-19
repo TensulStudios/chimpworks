@@ -1,6 +1,15 @@
 let pendingTokens = {}
 
 export default function handler(req, res) {
+  res.setHeader('Access-Control-Allow-Origin', '*')
+
+  if (req.method === 'OPTIONS') {
+    res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS')
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type')
+    res.status(204).end()
+    return
+  }
+
   if (req.method !== 'GET') {
     res.status(405).json({ error: 'Only GET requests allowed.' })
     return
