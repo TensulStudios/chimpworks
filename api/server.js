@@ -42,11 +42,6 @@ export default function handler(req, res) {
       res.status(404).json({ error: 'Invalid token.' })
       return
     }
-    if (data.claimed) {
-      res.status(403).json({ error: 'Token already used.' })
-      return
-    }
-    data.claimed = true
     res.status(200).json({ room: data.room })
     return
   }
