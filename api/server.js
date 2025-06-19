@@ -1,6 +1,6 @@
 const pendingTokens = {}
 
-export async function GET(req) {
+export async function handler(req) {
   const { searchParams } = new URL(req.url)
   const mode = searchParams.get('mode')
   const token = searchParams.get('token')
