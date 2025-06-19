@@ -1,4 +1,4 @@
-let pendingTokens = {}
+let tokenData = {}
 
 export default function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*')
@@ -11,40 +11,36 @@ export default function handler(req, res) {
   }
 
   if (req.method !== 'GET') {
-    res.status(405).json({ error: 'Only GET requests allowed.' })
+    res.status(405).json({ error: 'Only GET allowed.' })
     return
   }
 
-  const { mode, token, room } = req.query
+  const { appid, voiceid, token, mode } = req.query
 
-  if (!mode) {
-    res.status(400).json({ error: 'Missing "mode" parameter.' })
+  if (!token) {
+    res.status(400).json({ error: 'Missing token parameter.' })
     return
   }
 
-  if (mode === 'create') {
-    if (!token || !room) {
-      res.status(400).json({ error: 'Missing "token" or "room" parameter for create.' })
+  if (mode === 'set') {
+    if (!appid || !voiceid) {
+      res.status(400).json({ error: 'Missing appid or voiceid for set mode.' })
       return
     }
-    pendingTokens[token] = { room, claimed: false }
+    tokenData[token] = { appid, voiceid }
     res.status(200).json({ success: true })
     return
   }
 
-  if (mode === 'claim') {
-    if (!token) {
-      res.status(400).json({ error: 'Missing "token" parameter for claim.' })
-      return
-    }
-    const data = pendingTokens[token]
+  if (mode === 'get') {
+    const data = tokenData[token]
     if (!data) {
-      res.status(404).json({ error: 'Invalid token.' })
+      res.status(404).json({ error: 'Token not found.' })
       return
     }
-    res.status(200).json({ room: data.room })
+    res.status(200).json(data)
     return
   }
 
-  res.status(400).json({ error: 'Cannot process your request.' })
+  res.status(400).json({ error: 'Missing or invalid mode parameter. Use mode=set or mode=get.' })
 }
