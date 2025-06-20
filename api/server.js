@@ -30,7 +30,7 @@ export default function handler(req, res) {
     return
   }
 
-  const { mode, appid, voiceid, token, secrettoken } = req.query
+  const { mode, appid, voiceid, token, secrettoken, roomlimit } = req.query
 
   if (mode === 'create') {
     if (!appid || !voiceid) {
@@ -43,10 +43,14 @@ export default function handler(req, res) {
       joinToken = generateToken()
     } while (tokenStore[joinToken])
 
-    const secret = generateSecretToken()
-    tokenStore[joinToken] = { appid, voiceid, secret }
+    if(!roomlimit) {
+      roomlimit = 10
+    }
 
-    res.status(200).json({ token: joinToken, secret })
+    const secret = generateSecretToken()
+    tokenStore[joinToken] = { appid, voiceid, secret, roomlimit }
+
+    res.status(200).json({ token: joinToken, secretkey: secret })
     return
   }
 
@@ -62,7 +66,7 @@ export default function handler(req, res) {
       return
     }
 
-    res.status(200).json({ appid: data.appid, voiceid: data.voiceid })
+    res.status(200).json({ appid: data.appid, voiceid: data.voiceid, roomlimit: data.roomlimit })
     return
   }
 
