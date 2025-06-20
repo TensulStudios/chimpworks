@@ -1,4 +1,19 @@
-let tokenData = {}
+import crypto from 'crypto'
+
+let tokenStore = {}
+
+function generateToken(length = 5) {
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
+  let result = ''
+  for (let i = 0; i < length; i++) {
+    result += chars.charAt(Math.floor(Math.random() * chars.length))
+  }
+  return result
+}
+
+function generateSecretToken() {
+  return crypto.randomBytes(24).toString('hex')
+}
 
 export default function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*')
@@ -11,49 +26,62 @@ export default function handler(req, res) {
   }
 
   if (req.method !== 'GET') {
-    res.status(405).json({ error: 'Only GET allowed.' })
+    res.status(405).json({ error: 'Only GET requests allowed.' })
     return
   }
 
-   async function fetchToken() {
-    const responseEl = document.getElementById('response');
-    try {
-      const res = await fetch('https://tapkey.vercel.app/api/onetime');
-      if (!res.ok) throw new Error('Network response was not ok');
-      const data = await res.json();
-      return dta
-    } catch (e) {
-      return ""
-    }
-  }
-  fetchToken();
-  
-  const { appid, voiceid, mode } = req.query
+  const { mode, appid, voiceid, token, secrettoken } = req.query
 
-  if (!token) {
-    res.status(400).json({ error: 'Missing token parameter.' })
-    return
-  }
-
-  if (mode === 'set') {
+  if (mode === 'create') {
     if (!appid || !voiceid) {
-      res.status(400).json({ error: 'Missing appid or voiceid for set mode.' })
+      res.status(400).json({ error: 'Missing appid or voiceid.' })
       return
     }
-    tokenData[token] = { appid, voiceid }
-    res.status(200).json({ success: true })
+
+    let joinToken
+    do {
+      joinToken = generateToken()
+    } while (tokenStore[joinToken])
+
+    const secret = generateSecretToken()
+    tokenStore[joinToken] = { appid, voiceid, secret }
+
+    res.status(200).json({ token: joinToken, secret })
     return
   }
 
   if (mode === 'get') {
-    const data = tokenData[token]
+    if (!token) {
+      res.status(400).json({ error: 'Missing token.' })
+      return
+    }
+
+    const data = tokenStore[token]
     if (!data) {
       res.status(404).json({ error: 'Token not found.' })
       return
     }
-    res.status(200).json(data)
+
+    res.status(200).json({ appid: data.appid, voiceid: data.voiceid })
     return
   }
 
-  res.status(400).json({ error: 'Missing or invalid mode parameter. Use mode=set or mode=get.' })
+  if (mode === 'delete') {
+    if (!secrettoken) {
+      res.status(400).json({ error: 'Missing secret token.' })
+      return
+    }
+
+    const foundKey = Object.keys(tokenStore).find(k => tokenStore[k].secret === secrettoken)
+    if (!foundKey) {
+      res.status(404).json({ error: 'Invalid secret token.' })
+      return
+    }
+
+    delete tokenStore[foundKey]
+    res.status(200).json({ success: true })
+    return
+  }
+
+  res.status(400).json({ error: 'Invalid mode.' })
 }
