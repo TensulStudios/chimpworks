@@ -30,7 +30,11 @@ export default function handler(req, res) {
     return
   }
 
-  const { mode, appid, voiceid, token, secrettoken, roomlimit } = req.query
+    let { mode, appid, voiceid, token, secrettoken, roomlimit } = req.query
+    roomlimit = parseInt(roomlimit, 10)
+    if (isNaN(roomlimit) || roomlimit <= 0) {
+      roomlimit = 10
+    }
 
   if (mode === 'create') {
     if (!appid || !voiceid) {
