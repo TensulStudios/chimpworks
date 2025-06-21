@@ -275,25 +275,48 @@
     color: var(--text-primary-dark);
   }
 
-  a {
+  #itch {
     color: #667eea;
     text-decoration: none;
     transition: all 0.3s ease;
     position: relative;
   }
 
-  a::after {
+  #itch::after {
     content: '';
     position: absolute;
     bottom: -2px;
     left: 0;
     width: 0;
     height: 2px;
-    background: var(--primary-gradient);
+    background: rgba(255,100,100,1);
     transition: width 0.3s ease;
   }
 
-  a:hover::after {
+  #itch:hover::after {
+    width: 100%;
+  }
+
+
+  #link {
+    color: #667eea;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    position: relative;
+  }
+
+  #link::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: #667eea;
+    transition: width 0.3s ease;
+  }
+
+  #link:hover::after {
     width: 100%;
   }
 
@@ -392,7 +415,7 @@
         <div style="margin: 50px 15px;">
             <img style="width:600px;"src="/chimpworks logo.png">
         </div>
-        <a href="https://tempmakesgames.itch.io/chimpworks"><img src="https://itch.io/favicon.ico"></a>
+        <a id="itch" href="https://tempmakesgames.itch.io/chimpworks"><img src="https://itch.io/favicon.ico"></a>
     </header>
 
   <main>
@@ -402,7 +425,7 @@
     </section>
     <section class="card">
       <h2>Server Creation</h2>
-      <p>Server creation in CHIMPWORKS is not as easy as other games. CHIMPWORKS uses a token system so the game can stay free and open always.<br><br>You can learn how to make servers <a href="https://www.youtube.com/watch?v=GiILayk-CHg">here</a>.</p>
+      <p>Server creation in CHIMPWORKS is not as easy as other games. CHIMPWORKS uses a token system so the game can stay free and open always.<br><br>You can learn how to make servers <a id="link" href="https://www.youtube.com/watch?v=GiILayk-CHg">here</a>.</p>
     </section>
     <section class="card">
       <h2>Game is not currently released.</h2>
