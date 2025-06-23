@@ -3,10 +3,10 @@ import crypto from 'crypto'
 let tokenStore = {}
 
 function generateToken(length = 5) {
-  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
+  const digits = '0123456789'
   let result = ''
   for (let i = 0; i < length; i++) {
-    result += chars.charAt(Math.floor(Math.random() * chars.length))
+    result += digits.charAt(Math.floor(Math.random() * digits.length))
   }
   return result
 }
@@ -30,11 +30,11 @@ export default function handler(req, res) {
     return
   }
 
-    let { mode, appid, voiceid, token, secrettoken, roomlimit } = req.query
-    roomlimit = parseInt(roomlimit, 10)
-    if (isNaN(roomlimit) || roomlimit <= 0) {
-      roomlimit = 10
-    }
+  let { mode, appid, voiceid, token, secrettoken, roomlimit } = req.query
+  roomlimit = parseInt(roomlimit, 10)
+  if (isNaN(roomlimit) || roomlimit <= 0) {
+    roomlimit = 10
+  }
 
   if (mode === 'create') {
     if (!appid || !voiceid) {
@@ -47,7 +47,7 @@ export default function handler(req, res) {
       joinToken = generateToken()
     } while (tokenStore[joinToken])
 
-    if(!roomlimit) {
+    if (!roomlimit) {
       roomlimit = 10
     }
 
