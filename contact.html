@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CHIMPWORKS</title>
+<meta name="title" content="CHIMPWORKS">
+<meta name="description" content="CHIMPWORKS is a multiplayer physics sandbox game, inspired by games like BONEWORKS and BONELAB.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://chimpworks.vercel.app/">
+<meta property="og:title" content="CHIMPWORKS">
+<meta property="og:description" content="CHIMPWORKS is a multiplayer physics sandbox game, inspired by games like BONEWORKS and BONELAB.">
+<meta property="og:image" content="/image.png">
+<meta property="twitter:card" content="summary_large_image">
+<meta property="twitter:url" content="https://chimpworks.vercel.app/">
+<meta property="twitter:title" content="CHIMPWORKS">
+<meta property="twitter:description" content="CHIMPWORKS is a multiplayer physics sandbox game, inspired by BONEWORKS and BONELAB.">
+<meta property="twitter:image" content="/image.png">
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  :root {
+    --dark-bg: #0a0a0a;
+    --dark-card: #1a1a1a;
+    --dark-border: #333;
+    --text-primary-dark: #f1f5f9;
+    --text-secondary-dark: #94a3b8;
+    --accent-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: var(--dark-bg);
+    color: var(--text-primary-dark);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  header {
+    text-align: center;
+    position: relative;
+    height: 290px;
+    margin-top: 50px;
+  }
+
+  h1, h2 {
+    background: var(--accent-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  main {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 4rem 2rem;
+  }
+
+  .card {
+    background: var(--dark-card);
+    border-radius: 20px;
+    padding: 2.5rem;
+    margin-bottom: 2rem;
+    border: 1px solid var(--dark-border);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  }
+
+  h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+  }
+
+  p {
+    color: var(--text-secondary-dark);
+    margin-bottom: 1rem;
+  }
+  
+  p {
+    color: var(--text-secondary-dark);
+    margin-bottom: 1rem;
+  }
+
+  ul {
+    list-style: none;
+    margin: 1.5rem 0;
+  }
+
+  ul li {
+    color: var(--text-secondary-dark);
+    padding: 0.75rem 0;
+    padding-left: 1.5rem;
+    position: relative;
+  }
+
+  ul li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    background: var(--accent-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: bold;
+    font-size: 1.2em;
+  }
+
+  a {
+    color: #4facfe;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+
+  a:hover {
+    color: #00f2fe;
+    text-decoration: underline;
+  }
+
+  strong {
+    color: var(--text-primary-dark);
+    font-weight: 600;
+  }
+
+  footer {
+    text-align: center;
+    padding: 2rem;
+    color: var(--text-secondary-dark);
+    background: var(--dark-card);
+    border-top: 1px solid var(--dark-border);
+  }
+
+  @media (max-width: 768px) {
+    header { height: 220px; }
+    .card { padding: 1.5rem; }
+    main { padding: 2rem 1rem; }
+  }
+</style>
+</head>
+<body class="dark">
+  <header>
+    <div style="margin: 25px 15px;">
+      <img style="width:600px;" src="https://raw.githubusercontent.com/TensulStudios/chimpworks/refs/heads/main/chimpworks%20logo.png" alt="CHIMPWORKS Logo">
+    </div>
+  </header>
+
+  <main>
+    <section class="card">
+      <h2>Contact Us</h2>
+      <p>
+       You can contact us at <a href="mailto:tunfulstudios@gmail.com">tunfulstudios@gmail.com</a>.
+      </p>
+    </section>
+  </main>
+
+  <footer>
+    © 2025 CHIMPWORKS — All Rights Reserved.
+  </footer>
+</body>
+</html>
