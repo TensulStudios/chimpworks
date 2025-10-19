@@ -24,9 +24,9 @@
   }
 
   :root {
-    --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-    --accent-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    --primary-gradient: #667eea;
+    --secondary-gradient: #f5576c;
+    --accent-gradient: #f5576c;
     --dark-bg: #0a0a0a;
     --dark-card: #1a1a1a;
     --dark-border: #333;
@@ -55,21 +55,6 @@
   body.dark {
     background: var(--dark-bg);
     color: var(--text-primary-dark);
-  }
-
-  body::before {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: 
-      radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.1) 0%, transparent 20%),
-      radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.1) 0%, transparent 20%),
-      radial-gradient(circle at 40% 80%, rgba(120, 219, 255, 0.1) 0%, transparent 20%);
-    z-index: -1;
-    animation: float 20s ease-in-out infinite;
   }
 
   body.dark::before {
